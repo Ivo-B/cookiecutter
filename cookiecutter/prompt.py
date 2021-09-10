@@ -190,6 +190,8 @@ def prompt_for_config(context, no_input=False):
     # These must be done first because the dictionaries keys and
     # values might refer to them.
     for key, raw in context['cookiecutter'].items():
+        key = render_variable(env, key, cookiecutter_dict)
+        
         if key.startswith('_') and not key.startswith('__'):
             cookiecutter_dict[key] = raw
             continue
@@ -218,6 +220,8 @@ def prompt_for_config(context, no_input=False):
 
     # Second pass; handle the dictionaries.
     for key, raw in context['cookiecutter'].items():
+        key = render_variable(env, key, cookiecutter_dict)
+        
         # Skip private type dicts not ot be rendered.
         if key.startswith('_') and not key.startswith('__'):
             continue
